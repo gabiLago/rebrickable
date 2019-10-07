@@ -9,6 +9,6 @@ export const axiosInstance = axios.create({
 
 // Sets
 export const getSets = () => {
-  const url = `/sets${API_KEY_PARAMETER}`;
+  const url = `/sets${API_KEY_PARAMETER}&min_year=2013&max_year=2019&theme_id=1`;
   return axiosInstance.get(url);
 };
