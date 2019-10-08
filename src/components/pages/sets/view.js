@@ -4,6 +4,8 @@ import {SafeAreaView, TouchableOpacity, Image, FlatList} from 'react-native';
 import * as api from '../../../api';
 import _ from 'lodash';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
+import {setsActions} from '../../../redux/sets';
 
 class Sets extends React.Component {
   state = {
@@ -18,7 +20,8 @@ class Sets extends React.Component {
     try {
       const getSetsRes = await api.getSets();
       const sets = _.get(getSetsRes, 'data.results', []);
-      this.setState({sets: sets});
+      //this.setState({sets: sets});
+      this.props.populateSetsList(sets);
     } catch (e) {
       console.log('getSets err: ', e);
     }
@@ -32,7 +35,8 @@ class Sets extends React.Component {
       return (
         <TouchableOpacity
           style={{flex: 1}}
-          onPress={set => console.log('Set Num: ', setNum)}>
+          //onPress={set => console.log('Set Num: ', setNum)}
+        >
           <Image
             source={{uri: imageDir}}
             style={{left: '5%', width: '90%', height: 300}}
@@ -44,11 +48,12 @@ class Sets extends React.Component {
 
   render() {
     const {sets} = this.state;
-    console.log('sets: ', sets);
+    const {setsList} = this.props;
+    console.log('this.props: ', this.props);
     return (
       <SafeAreaView>
         <FlatList
-          data={sets}
+          data={setsList}
           renderItem={this._renderItem}
           keyExtractor={(item, index) => `set-${index}`}
           numColumns={1}
@@ -58,4 +63,23 @@ class Sets extends React.Component {
   }
 }
 
-export default Sets;
+const mapStateToProps = state => {
+  console.log('state: ', state);
+  return {
+    setsList: state.sets.list,
+    isFetching: state.sets.isFetching,
+  };
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    populateSetsList: list => {
+      dispatch(setsActions.updateList(list));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Sets);

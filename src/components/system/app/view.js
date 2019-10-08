@@ -1,6 +1,8 @@
 import React from 'react';
 import {YellowBox} from 'react-native';
 import Routes from '../routes';
+import {Provider} from 'react-redux';
+import store from '../../../config/redux';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,7 +10,11 @@ class App extends React.Component {
     YellowBox.ignoreWarnings(['Warning: componentWillReceiveProps']);
   }
   render() {
-    return <Routes />;
+    return (
+      <Provider store={store}>
+        <Routes />
+      </Provider>
+    );
   }
 }
 
