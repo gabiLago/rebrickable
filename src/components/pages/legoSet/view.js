@@ -1,20 +1,14 @@
 import React from 'react';
-import {Text, SafeAreaView, Image} from 'react-native';
+import {Text, SafeAreaView, Image, FlatList} from 'react-native';
 
 class LegoSet extends React.Component {
-  constructor(props){
-    super(props);
+  componentDidMount() {
+    this.props.fetchSetPartsList(this.props.selectedItem.set_num);
   }
 
-  static navigationOptions = {
-    title: 'Home',
-  };
-
-
-  
   render() {
     const set = this.props.selectedItem;
-    console.log('set: ', set);
+    console.log('this.props: ', this.props);
     return (
       <SafeAreaView>
        <Image

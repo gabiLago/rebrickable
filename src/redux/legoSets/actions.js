@@ -25,7 +25,7 @@ export const fetchSetsList = () => {
       const legoSets = _.get(getSetsRes, 'data.results', []);
       dispatch(updateList(legoSets));
     } catch (e) {
-      console.log('getSets err: ', e);
+      console.log('getSets err: ', e.message);
     } finally {
       dispatch(setFetching(false));
     }

@@ -1,17 +1,18 @@
 import View from './view';
 import {connect} from 'react-redux';
-import {setsActions} from '../../../redux/legoSets';
+import {setActions} from '../../../redux/legoSet';
 
 const mapStateToProps = state => {
   return {
     selectedItem: state.legoSets.selectedItem,
+    isFetching: state.legoSet.isFetching,
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    updateItem: set => {
-      dispatch(setsActions.updateItem(set));
+    fetchSetPartsList: legoSetNum => {
+      dispatch(setActions.fetchSetPartsList(legoSetNum));
     },
   };
 };
