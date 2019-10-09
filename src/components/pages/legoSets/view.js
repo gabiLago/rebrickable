@@ -11,6 +11,7 @@ import * as api from '../../../api';
 import _ from 'lodash';
 import {Actions} from 'react-native-router-flux';
 import {LegoSetsCell} from './../../molecules';
+import legoSets from '../../../redux/legoSets';
 
 class Sets extends React.Component {
   componentDidMount() {
@@ -28,7 +29,8 @@ class Sets extends React.Component {
 
   _onCellPressed = legoSet => {
     this.props.updateItem(legoSet);
-    Actions.SetDetails();
+    console.log(legoSet.name);
+    Actions.LegoSet({title: 'LEGO ' + legoSet.set_num});
   };
 
   render() {

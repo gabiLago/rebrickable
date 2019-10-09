@@ -5,8 +5,8 @@ import {LegoSet, LegoSets, ThemeForm, YearsForm} from '../../pages';
 const Routes = () => (
   <Router>
     <Stack key="root">
-      <Scene key="Sets" component={LegoSets} hideNavBar initial />
-      <Scene key="SetDetails" component={LegoSet} />
+      <Scene key="LegoSets" component={LegoSets} hideNavBar initial />
+      <Scene key="LegoSet" component={LegoSet} title={'LEGO Set'}/>
       <Scene key="ThemeForm" component={ThemeForm} />
       <Scene key="YearsForm" component={YearsForm} />
     </Stack>

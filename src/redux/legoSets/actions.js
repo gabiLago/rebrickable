@@ -21,9 +21,9 @@ export const fetchSetsList = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(setFetching(true));
-      const getSetsRes = await api.getSets();
-      const sets = _.get(getSetsRes, 'data.results', []);
-      dispatch(updateList(sets));
+      const getSetsRes = await api.getLegoSets();
+      const legoSets = _.get(getSetsRes, 'data.results', []);
+      dispatch(updateList(legoSets));
     } catch (e) {
       console.log('getSets err: ', e);
     } finally {

@@ -4,16 +4,12 @@ import {setsActions} from '../../../redux/legoSets';
 
 const mapStateToProps = state => {
   return {
-    setsList: state.legoSets.list,
-    isFetching: state.legoSets.isFetching,
+    selectedItem: state.legoSets.selectedItem,
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchSetsList: () => {
-      dispatch(setsActions.fetchSetsList());
-    },
     updateItem: set => {
       dispatch(setsActions.updateItem(set));
     },

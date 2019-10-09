@@ -1,3 +1,4 @@
-import sets from './legoSets';
+import legoSets from './legoSets';
+import legoSet from './legoSet';
 
-export {sets};
+export {legoSets, legoSet};
