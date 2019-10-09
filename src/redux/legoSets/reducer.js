@@ -8,19 +8,19 @@ const initialState = {
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case types.SETS_UPDATE_LIST:
+    case types.LEGO_SETS_UPDATE_LIST:
       return {
         ...state,
         list: action.value,
       };
 
-    case types.SETS_UPDATE_ITEM:
+    case types.LEGO_SET_UPDATE_ITEM:
       return {
         ...state,
         selectedItem: action.value || null,
       };
 
-    case types.SETS_FETCH_SETTINGS:
+    case types.LEGO_SETS_FETCH_STATE:
       return {
         ...state,
         isFetching: action.value,

@@ -1,9 +1,8 @@
 import View from './view';
 import {connect} from 'react-redux';
-import {setsActions} from '../../../redux/sets';
+import {setsActions} from '../../../redux/legoSets';
 
 const mapStateToProps = state => {
-  console.log('state: ', state);
   return {
     setsList: state.sets.list,
     isFetching: state.sets.isFetching,
@@ -12,8 +11,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchSetsList: list => {
+    fetchSetsList: () => {
       dispatch(setsActions.fetchSetsList());
+    },
+    updateItem: set => {
+      dispatch(setsActions.updateItem(set));
     },
   };
 };

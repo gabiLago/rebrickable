@@ -3,12 +3,17 @@ import * as api from '../../api';
 import _ from 'lodash';
 
 export const setFetching = value => ({
-  type: types.SETS_FETCH_SETTINGS,
+  type: types.LEGO_SETS_FETCH_STATE,
   value,
 });
 
 export const updateList = value => ({
-  type: types.SETS_UPDATE_LIST,
+  type: types.LEGO_SETS_UPDATE_LIST,
+  value,
+});
+
+export const updateItem = value => ({
+  type: types.LEGO_SET_UPDATE_ITEM,
   value,
 });
 

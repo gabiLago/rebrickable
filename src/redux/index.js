@@ -1,3 +1,3 @@
-import sets from './sets';
+import sets from './legoSets';
 
 export {sets};
