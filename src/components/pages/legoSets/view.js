@@ -1,7 +1,6 @@
 import React from 'react';
 import {SafeAreaView, FlatList, RefreshControl} from 'react-native';
 //import styles from './styles';
-import _ from 'lodash';
 import {Actions} from 'react-native-router-flux';
 import {LegoSetsCell} from './../../molecules';
 
@@ -21,9 +20,12 @@ class Sets extends React.Component {
 
   _onCellPressed = legoSet => {
     this.props.updateItem(legoSet);
-    console.log(legoSet.name);
     Actions.LegoSet({title: 'LEGO ' + legoSet.set_num});
   };
+
+  _onEndReached = ({distanceFromEnd}) => {
+    console.log('endReached')
+  }
 
   render() {
     const {setsList, isFetching} = this.props;
@@ -34,6 +36,8 @@ class Sets extends React.Component {
           renderItem={this._renderItem}
           keyExtractor={(item, index) => `set-${index}`}
           extraData={this.props.isFetching}
+          onEndReached={this._onEndReached}
+          onEndReachedThreshold={0.8}
           refreshControl={
             <RefreshControl
               refreshing={isFetching}

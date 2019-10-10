@@ -1,2 +1,3 @@
 import LegoSetsCell from './legoSetsCell';
-export {LegoSetsCell};
+import LegoSetPartsCell from './legoSetPartsCell';
+export {LegoSetsCell, LegoSetPartsCell};

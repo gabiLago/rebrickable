@@ -6,6 +6,7 @@ const mapStateToProps = state => {
   return {
     selectedItem: state.legoSets.selectedItem,
     isFetching: state.legoSet.isFetching,
+    partsList: state.legoSet.list,
   };
 };
 

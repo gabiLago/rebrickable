@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL, API_KEY_PARAMETER} from '../config/api';
+import {BASE_URL} from '../config/api';
 import qs from 'qs';
 
 export const axiosInstance = axios.create({
@@ -7,14 +7,16 @@ export const axiosInstance = axios.create({
   headers: {'Content-Type': 'application/json'},
 });
 
-// Sets
-export const getLegoSets = () => {
-  const url = `/sets${API_KEY_PARAMETER}&min_year=2013&max_year=2019&theme_id=1`;
+// LEGO Sets
+export const getLegoSets = params => {
+  const stringifyParams = qs.stringify(params, {skipNulls: true});
+  const url = `/sets?${stringifyParams}`;
   return axiosInstance.get(url);
 };
 
-//Parts
-export const getLegoSetParts = legoSetNum => {
-  const url = `/sets/${legoSetNum}/parts${API_KEY_PARAMETER}`;
+// LEGO Parts
+export const getLegoSetParts = (legoSetNum, params) => {
+  const stringifyParams = qs.stringify(params, {skipNulls: true});
+  const url = `/sets/${legoSetNum}/parts?${stringifyParams}`;
   return axiosInstance.get(url);
 };
