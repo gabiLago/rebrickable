@@ -10,9 +10,10 @@ export const setFetching = value => ({
   value,
 });
 
-export const updateList = value => ({
+export const updateList = (list, next) => ({
   type: types.LEGO_SETS_UPDATE_LIST,
-  value,
+  list,
+  next,
 });
 
 export const updateItem = value => ({
@@ -20,7 +21,7 @@ export const updateItem = value => ({
   value,
 });
 
-export const fetchSetsList = () => {
+export const initSetsList = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(setFetching(true));
@@ -33,9 +34,30 @@ export const fetchSetsList = () => {
       };
       const getSetsRes = await api.getLegoSets(params);
       const legoSets = _.get(getSetsRes, 'data.results', []);
-      dispatch(updateList(legoSets));
+      const nextApiCall = _.get(getSetsRes, 'data.next', null);
+      dispatch(updateList(legoSets, nextApiCall));
     } catch (e) {
-      console.log('getSets err: ', e.message);
+      console.log('Initial Sets List Fetch err: ', e.message);
+    } finally {
+      dispatch(setFetching(false));
+    }
+  };
+};
+
+export const nextSetsList = url => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(setFetching(true));
+      const formerSetsList = getState().legoSets.list;
+      const getNextSetsRes = await api.getNextApiCall(url);
+      const newSetsList = [
+        ...formerSetsList,
+        ..._.get(getNextSetsRes, 'data.results', []),
+      ];
+      const nextApiCall = _.get(getNextSetsRes, 'data.next', null);
+      dispatch(updateList(newSetsList, nextApiCall));
+    } catch (e) {
+      console.log('Nexts Sets List Fetch err: ', e.message);
     } finally {
       dispatch(setFetching(false));
     }

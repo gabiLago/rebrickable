@@ -14,6 +14,11 @@ export const getLegoSets = params => {
   return axiosInstance.get(url);
 };
 
+// Next Api Call for Sets or Parts - for pagination - URL comes whith its token! from API, they did the work for us ;-)
+export const getNextApiCall = absoluteUrl => {
+  return axiosInstance.get(absoluteUrl);
+};
+
 // LEGO Parts
 export const getLegoSetParts = (legoSetNum, params) => {
   const stringifyParams = qs.stringify(params, {skipNulls: true});

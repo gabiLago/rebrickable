@@ -6,7 +6,7 @@ import {LegoSetsCell} from './../../molecules';
 
 class Sets extends React.Component {
   componentDidMount() {
-    this.props.fetchSetsList();
+    this.props.initSetsList();
   }
 
   _renderItem = ({item}) => {
@@ -24,8 +24,12 @@ class Sets extends React.Component {
   };
 
   _onEndReached = ({distanceFromEnd}) => {
-    console.log('endReached')
-  }
+    const {isFetching, next} = this.props;
+    const onEndReached = distanceFromEnd > 100 && !isFetching && next !== null;
+    if (onEndReached) {
+      this.props.nextSetsList(next);
+    }
+  };
 
   render() {
     const {setsList, isFetching} = this.props;
@@ -41,7 +45,7 @@ class Sets extends React.Component {
           refreshControl={
             <RefreshControl
               refreshing={isFetching}
-              onRefresh={this.props.fetchSetsList}
+              onRefresh={this.props.initSetsList}
               tintColor={'black'}
               colors={['black']}
             />

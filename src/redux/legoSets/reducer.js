@@ -3,6 +3,7 @@ import * as types from './types';
 const initialState = {
   list: [],
   item: null,
+  next: null,
   isFetching: false,
 };
 
@@ -11,7 +12,8 @@ const reducer = (state = initialState, action = {}) => {
     case types.LEGO_SETS_UPDATE_LIST:
       return {
         ...state,
-        list: action.value,
+        list: action.list,
+        next: action.next || null,
       };
 
     case types.LEGO_SET_UPDATE_ITEM:

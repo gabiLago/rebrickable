@@ -10,7 +10,8 @@ const reducer = (state = initialState, action = {}) => {
     case types.LEGO_SET_PARTS_UPDATE_LIST:
       return {
         ...state,
-        list: action.value,
+        list: action.list,
+        next: action.next || null,
       };
 
     case types.LEGO_SET_FETCH_STATE:

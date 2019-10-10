@@ -7,14 +7,18 @@ const mapStateToProps = state => {
     selectedItem: state.legoSets.selectedItem,
     isFetching: state.legoSet.isFetching,
     partsList: state.legoSet.list,
+    next: state.legoSet.next,
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchSetPartsList: legoSetNum => {
-      dispatch(setActions.fetchSetPartsList(legoSetNum));
+    initialSetPartsList: legoSetNum => {
+      dispatch(setActions.initialSetPartsList(legoSetNum));
     },
+    nextSetPartsList: url => {
+      dispatch(setActions.nextSetPartsList(url));
+    }
   };
 };
 

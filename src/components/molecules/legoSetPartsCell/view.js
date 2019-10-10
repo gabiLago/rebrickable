@@ -7,8 +7,6 @@ import styles from './styles';
 class LegoSetPartsCell extends React.Component {
   render() {
     const partData = this.props.partsListItem.part;
-    
-    console.log('item: ', partData);
     const partImgUrl = partData.part_img_url;
     const partName = partData.name;
     

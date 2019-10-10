@@ -6,16 +6,20 @@ const mapStateToProps = state => {
   return {
     setsList: state.legoSets.list,
     isFetching: state.legoSets.isFetching,
+    next: state.legoSets.next,
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    fetchSetsList: () => {
-      dispatch(setsActions.fetchSetsList());
+    initSetsList: () => {
+      dispatch(setsActions.initSetsList());
     },
     updateItem: set => {
       dispatch(setsActions.updateItem(set));
+    },
+    nextSetsList: url => {
+      dispatch(setsActions.nextSetsList(url));
     },
   };
 };

@@ -14,16 +14,25 @@ import styles from './styles';
 class LegoSet extends React.Component {
 
   componentDidMount() {
-    this.props.fetchSetPartsList(this.props.selectedItem.set_num);
+    const {initialSetPartsList, selectedItem} = this.props;
+    initialSetPartsList(selectedItem.set_num);
   }
 
   _renderItem = ({item}) => {
     return <LegoSetPartsCell partsListItem={item} />;
   };
 
+  _onEndReached = ({distanceFromEnd}) => {
+    const {isFetching, next} = this.props;
+    const onEndReached = distanceFromEnd > 10 && !isFetching && next !== null;
+    if (onEndReached) {
+      this.props.nextSetPartsList(next);
+    }
+  };
+
   render() {
     const set = this.props.selectedItem;
-    const {partsList, isFetching, fetchSetPartsList} = this.props;
+    const {partsList, isFetching, initialSetPartsList} = this.props;
     return (
       <SafeAreaView style={styles.container}>
          <Image
@@ -42,7 +51,9 @@ class LegoSet extends React.Component {
           data={partsList}
           renderItem={this._renderItem}
           keyExtractor={(item, index) => `part-${index}`}
-          extraData={this.props.isFetching}
+          extraData={isFetching}
+          onEndReached={this._onEndReached}
+          onEndReachedThreshold={0.8}
         />
       </SafeAreaView>
     );

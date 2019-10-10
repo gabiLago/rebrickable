@@ -7,6 +7,8 @@ import styles from './styles';
 class LegoSetsCell extends React.Component {
   render() {
     const {legoSet, onCellPress} = this.props;
+    const lastCell = legoSet.last;
+    const lastString = lastCell ? 'End' : '';
     const legoSetImgUrl = _.get(legoSet, 'set_img_url');
     const name = _.get(legoSet, 'name');
 
