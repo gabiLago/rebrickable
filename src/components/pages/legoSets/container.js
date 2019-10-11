@@ -12,8 +12,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    initSetsList: () => {
-      dispatch(setsActions.initSetsList());
+    initSetsList: search => {
+      dispatch(setsActions.initSetsList(search));
     },
     updateItem: set => {
       dispatch(setsActions.updateItem(set));

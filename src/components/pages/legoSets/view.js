@@ -1,12 +1,15 @@
 import React from 'react';
-import {SafeAreaView, FlatList, RefreshControl} from 'react-native';
+import {SafeAreaView, FlatList, RefreshControl, Text} from 'react-native';
 //import styles from './styles';
 import {Actions} from 'react-native-router-flux';
-import {LegoSetsCell} from './../../molecules';
+import {LegoSetsCell, SearchResults} from './../../molecules';
+import {SearchBox} from './../../organisms';
 
 class Sets extends React.Component {
   componentDidMount() {
-    this.props.initSetsList();
+    const {search, initSetsList} = this.props;
+    console.log('data: ', this.props);
+    initSetsList(search);
   }
 
   _renderItem = ({item}) => {
@@ -32,9 +35,11 @@ class Sets extends React.Component {
   };
 
   render() {
-    const {setsList, isFetching} = this.props;
+    const {setsList, isFetching, search} = this.props;
     return (
       <SafeAreaView>
+        <SearchBox />
+        <SearchResults searchString={search} />
         <FlatList
           data={setsList}
           renderItem={this._renderItem}

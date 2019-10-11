@@ -1,6 +1,6 @@
 import LegoSets from './legoSets';
 import LegoSet from './legoSet';
-import ThemeForm from './themeForm';
-import YearsForm from './yearsForm';
+import Welcome from './welcome';
+import FiltersForm from './filtersForm';
 
-export {LegoSets, LegoSet, ThemeForm, YearsForm};
+export {LegoSets, LegoSet, Welcome, FiltersForm};

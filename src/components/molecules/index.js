@@ -1,3 +1,4 @@
 import LegoSetsCell from './legoSetsCell';
 import LegoSetPartsCell from './legoSetPartsCell';
-export {LegoSetsCell, LegoSetPartsCell};
+import SearchResults from './searchResults';
+export {LegoSetsCell, LegoSetPartsCell, SearchResults};
