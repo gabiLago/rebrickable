@@ -21,22 +21,22 @@ export const updateItem = value => ({
   value,
 });
 
-export const initSetsList = search => {
+export const initSetsList = (search, initYear, finalYear) => {
   console.log('searchString: ', search);
+  console.log('initYear: ', initYear);
+  console.log('finalYear: ', finalYear);
   return async (dispatch, getState) => {
     try {
       dispatch(setFetching(true));
       let params = {
         key: API_KEY,
         page_size: API_ITEMS_LIMIT,
-        //search: searchString,
-        //min_year: 2013,
-        //max_year: 2019,
+        search: search,
+        min_year: initYear,
+        max_year: finalYear,
         //theme_id: 1,
       };
-      if (search !== undefined) {
-        params = {...params, search};
-      }
+
       console.log('Params: ', params);
       const getSetsRes = await api.getLegoSets(params);
       const legoSets = _.get(getSetsRes, 'data.results', []);

@@ -1,15 +1,14 @@
 import React from 'react';
 import {SafeAreaView, FlatList, RefreshControl, Text} from 'react-native';
-//import styles from './styles';
+import styles from './styles';
 import {Actions} from 'react-native-router-flux';
-import {LegoSetsCell, SearchResults} from './../../molecules';
+import {LegoSetsCell, SearchResults, Selector} from './../../molecules';
 import {SearchBox} from './../../organisms';
 
 class Sets extends React.Component {
   componentDidMount() {
-    const {search, initSetsList} = this.props;
-    console.log('data: ', this.props);
-    initSetsList(search);
+    const {search, initSetsList, finalYear, initYear} = this.props;
+    initSetsList(search, initYear, finalYear);
   }
 
   _renderItem = ({item}) => {
@@ -36,8 +35,9 @@ class Sets extends React.Component {
 
   render() {
     const {setsList, isFetching, search} = this.props;
+    //TODO Limpiar la lista cuando se vuelve a pintar con cambio de parámetros
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <SearchBox />
         <SearchResults searchString={search} />
         <FlatList
@@ -56,6 +56,7 @@ class Sets extends React.Component {
             />
           }
         />
+        <Selector />
       </SafeAreaView>
     );
   }

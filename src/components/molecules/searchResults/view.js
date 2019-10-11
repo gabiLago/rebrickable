@@ -10,6 +10,7 @@ class SearchResults extends React.Component {
     if (searchString !== undefined) {
       return <Text>Search results for {searchString}</Text>;
     } else {
+      // TODO: Ver cómo meter según lógica un elemento en el render, esto es una ñapa
       return(<View></View>)
     }
   }
