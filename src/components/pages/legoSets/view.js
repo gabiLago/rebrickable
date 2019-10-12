@@ -1,14 +1,18 @@
 import React from 'react';
-import {SafeAreaView, FlatList, RefreshControl, Text} from 'react-native';
+import {SafeAreaView, FlatList, RefreshControl} from 'react-native';
 import styles from './styles';
 import {Actions} from 'react-native-router-flux';
-import {LegoSetsCell, SearchResults, Selector} from './../../molecules';
-import {SearchBox} from './../../organisms';
+import {
+  LegoSetsCell,
+  SearchResults,
+  Selector,
+  SearchBox,
+} from './../../molecules';
 
 class Sets extends React.Component {
   componentDidMount() {
-    const {search, initSetsList, finalYear, initYear} = this.props;
-    initSetsList(search, initYear, finalYear);
+    const {initSetsList} = this.props;
+    initSetsList();
   }
 
   _renderItem = ({item}) => {
@@ -56,7 +60,7 @@ class Sets extends React.Component {
             />
           }
         />
-        <Selector />
+        <Selector first={'Add Your Set'} snd={'Filter Sets List'} />
       </SafeAreaView>
     );
   }

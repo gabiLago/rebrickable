@@ -28,6 +28,12 @@ const reducer = (state = initialState, action = {}) => {
         isFetching: action.value,
       };
 
+    case types.QUERY_PARAMS_UPDATE_LIST:
+      return {
+        ...state,
+        params: action.params,
+      };
+
     default:
       return state;
   }

@@ -21,23 +21,24 @@ export const updateItem = value => ({
   value,
 });
 
-export const initSetsList = (search, initYear, finalYear) => {
-  console.log('searchString: ', search);
-  console.log('initYear: ', initYear);
-  console.log('finalYear: ', finalYear);
+export const updateQueryParams = params => {
+  const action = {
+    type: types.QUERY_PARAMS_UPDATE_LIST,
+    params,
+  };
+  return action;
+};
+
+export const initSetsList = () => {
   return async (dispatch, getState) => {
     try {
-      dispatch(setFetching(true));
-      let params = {
+      const newParams = getState().legoSets.params;
+      const params = {
         key: API_KEY,
         page_size: API_ITEMS_LIMIT,
-        search: search,
-        min_year: initYear,
-        max_year: finalYear,
-        //theme_id: 1,
+        ...newParams,
       };
-
-      console.log('Params: ', params);
+      dispatch(setFetching(true));
       const getSetsRes = await api.getLegoSets(params);
       const legoSets = _.get(getSetsRes, 'data.results', []);
       const nextApiCall = _.get(getSetsRes, 'data.next', null);
@@ -64,6 +65,28 @@ export const nextSetsList = url => {
       dispatch(updateList(newSetsList, nextApiCall));
     } catch (e) {
       console.log('Nexts Sets List Fetch err: ', e.message);
+    } finally {
+      dispatch(setFetching(false));
+    }
+  };
+};
+
+export const postUserSet = data => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(setFetching(true));
+      let params = {
+        key: API_KEY,
+        page_size: API_ITEMS_LIMIT,
+      };
+      const getSetsRes = await api.getLegoSets(params);
+      const legoSets = _.get(getSetsRes, 'data.results', []);
+      const newSetsList = [data, ...legoSets];
+      const nextApiCall = _.get(getSetsRes, 'data.next', null);
+      console.log('newSetsList: ', newSetsList);
+      dispatch(updateList(newSetsList, nextApiCall));
+    } catch (e) {
+      console.log('Post User List Fetch err: ', e.message);
     } finally {
       dispatch(setFetching(false));
     }

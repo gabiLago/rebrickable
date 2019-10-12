@@ -10,17 +10,18 @@ class Selector extends React.Component {
   };
 
   _onPressAdd = () => {
-    Actions.Welcome();
+    Actions.AddUserSet();
   };
 
   render() {
+    const {first, snd} = this.props;
     return (
       <View>
-        <TouchableOpacity onPress={this._onPressFilter}>
-          <Text>Filtrar</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={this._onPressAdd}>
-          <Text>Añadir</Text>
+          <Text>{first}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this._onPressFilter}>
+          <Text>{snd}</Text>
         </TouchableOpacity>
       </View>
     );

@@ -8,8 +8,20 @@ class SearchBox extends React.Component {
     searchString: '',
   };
 
+  _onSubmit = event => {
+    const actualParams = this.props.params;
+    const params = {
+      ...actualParams,
+      search: event.nativeEvent.text,
+    };
+    this.props.updateQueryParams(params);
+    Actions.LegoSets();
+  };
+
   render() {
     const {searchString} = this.state;
+
+    console.log('this.state: ', this.state);
     return (
       <View style={styles.container}>
         <TextInput
@@ -19,9 +31,9 @@ class SearchBox extends React.Component {
           placeholder={'Search by Set Name'}
           returnKeyType={'search'}
           inlineImageLeft={'search_icon'}
-          onSubmitEditing={event =>
-            Actions.LegoSets({search: event.nativeEvent.text})
-          }
+          onSubmitEditing={event => {
+            this._onSubmit(event);
+          }}
         />
       </View>
     );
