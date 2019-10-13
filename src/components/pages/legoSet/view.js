@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  Text,
-  SafeAreaView,
-  Image,
-  FlatList,
-  View,
-} from 'react-native';
+import {Text, SafeAreaView, Image, FlatList, View} from 'react-native';
 import {LegoSetPartsCell} from '../../molecules';
 import {Actions} from 'react-native-router-flux';
 import _ from 'lodash';
-import styles from './styles'; 
+import styles from './styles';
 
 class LegoSet extends React.Component {
-
   componentDidMount() {
     const {initialSetPartsList, selectedItem} = this.props;
     initialSetPartsList(selectedItem.set_num);
@@ -32,21 +25,24 @@ class LegoSet extends React.Component {
 
   render() {
     const set = this.props.selectedItem;
-    const {partsList, isFetching, initialSetPartsList} = this.props;
+    const legoSetImgUrl = set.set_img_url;
+    const {partsList, isFetching} = this.props;
+    let imageSource;
+    if (legoSetImgUrl !== null) {
+      imageSource = {url: legoSetImgUrl};
+    } else {
+      imageSource = require('../../../assets/images/noImage.png');
+    }
+
     return (
       <SafeAreaView style={styles.container}>
-         <Image
-            source={{url: set.set_img_url}}
-            style={{
-              width: '75%',
-              height: 200
-            }}
-          />
-        <Text>{set.name}</Text>
-        <Text>Set nº: {set.set_num}</Text>
-        <Text>Número de piezas: {set.num_parts}</Text>
-        <Text>{set.year}</Text>
-        <Text>Url: {set.set_url}</Text>
+        <Text style={styles.title}>{set.name}</Text>
+        <Image source={imageSource} style={styles.images} />
+        <View style={styles.textsContainer}>
+          <Text style={styles.textsInfo}>Release year: {set.year}</Text>
+          <Text style={styles.textsInfo}>Parts: {set.num_parts}</Text>
+        </View>
+        <Text style={styles.title}>Parts List</Text>
         <FlatList
           data={partsList}
           renderItem={this._renderItem}

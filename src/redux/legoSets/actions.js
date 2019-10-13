@@ -1,9 +1,7 @@
 import * as types from './types';
 import * as api from '../../api';
-import {API_KEY} from '../../config/api';
 import _ from 'lodash';
-
-const API_ITEMS_LIMIT = 10;
+import {Utils} from '../utils';
 
 export const setFetching = value => ({
   type: types.LEGO_SETS_FETCH_STATE,
@@ -14,6 +12,11 @@ export const updateList = (list, next) => ({
   type: types.LEGO_SETS_UPDATE_LIST,
   list,
   next,
+});
+
+export const updateUserSetsList = list => ({
+  type: types.LEGO_USER_SETS_UPDATE_LIST,
+  list,
 });
 
 export const updateItem = value => ({
@@ -32,17 +35,23 @@ export const updateQueryParams = params => {
 export const initSetsList = () => {
   return async (dispatch, getState) => {
     try {
-      const newParams = getState().legoSets.params;
-      const params = {
-        key: API_KEY,
-        page_size: API_ITEMS_LIMIT,
-        ...newParams,
-      };
+      const {params, userSetsList} = getState().legoSets;
+      const tokenizedParams = Utils.tokenizedParams(params);
+
       dispatch(setFetching(true));
-      const getSetsRes = await api.getLegoSets(params);
-      const legoSets = _.get(getSetsRes, 'data.results', []);
+
+      const getSetsRes = await api.getLegoSets(tokenizedParams);
+      let legoSetsList = _.get(getSetsRes, 'data.results', []);
       const nextApiCall = _.get(getSetsRes, 'data.next', null);
-      dispatch(updateList(legoSets, nextApiCall));
+
+      if (userSetsList) {
+        console.log('User: ', userSetsList);
+        console.log('Lego: ', legoSetsList);
+        legoSetsList = [...userSetsList, ...legoSetsList];
+        console.log('mixed', legoSetsList);
+      }
+
+      dispatch(updateList(legoSetsList, nextApiCall));
     } catch (e) {
       console.log('Initial Sets List Fetch err: ', e.message);
     } finally {
@@ -55,12 +64,15 @@ export const nextSetsList = url => {
   return async (dispatch, getState) => {
     try {
       dispatch(setFetching(true));
+
       const formerSetsList = getState().legoSets.list;
       const getNextSetsRes = await api.getNextApiCall(url);
+
       const newSetsList = [
         ...formerSetsList,
         ..._.get(getNextSetsRes, 'data.results', []),
       ];
+
       const nextApiCall = _.get(getNextSetsRes, 'data.next', null);
       dispatch(updateList(newSetsList, nextApiCall));
     } catch (e) {
@@ -72,23 +84,13 @@ export const nextSetsList = url => {
 };
 
 export const postUserSet = data => {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(setFetching(true));
-      let params = {
-        key: API_KEY,
-        page_size: API_ITEMS_LIMIT,
-      };
-      const getSetsRes = await api.getLegoSets(params);
-      const legoSets = _.get(getSetsRes, 'data.results', []);
-      const newSetsList = [data, ...legoSets];
-      const nextApiCall = _.get(getSetsRes, 'data.next', null);
-      console.log('newSetsList: ', newSetsList);
-      dispatch(updateList(newSetsList, nextApiCall));
-    } catch (e) {
-      console.log('Post User List Fetch err: ', e.message);
-    } finally {
-      dispatch(setFetching(false));
+  return (dispatch, getState) => {
+    const {userSetsList} = getState().legoSets;
+    if (userSetsList) {
+      const list = [data, ...userSetsList];
+      dispatch(updateUserSetsList(list));
+    } else {
+      dispatch(updateUserSetsList([data]));
     }
   };
 };

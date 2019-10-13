@@ -32,6 +32,7 @@ class AddUserSet extends React.Component {
     num_parts: 0,
     set_img_url: '',
     set_num: '0001-User Set',
+    year: 1999,
   };
 
   _onSubmit = () => {
@@ -42,24 +43,25 @@ class AddUserSet extends React.Component {
     }
 
     if (!name || !num_parts) {
-      Alert.alert('Atenci??n', 'Complete el nombre y la edad');
+      Alert.alert('Atencion', 'Complete el nombre y la edad');
       return;
     }
 
     const data = {
       name,
-      num_parts,
-      set_img_url,
+      num_parts: parseInt(num_parts, 10),
+      set_img_url: null,
       set_num,
     };
 
     this.props.postUserSet(data);
+
     Actions.LegoSets();
   };
 
   render() {
     const {isFetching} = this.props;
-    const {name, num_parts, set_img_url} = this.state;
+    const {name, num_parts} = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -78,11 +80,11 @@ class AddUserSet extends React.Component {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>{'Number of Parts:'}</Text>
+          <Text style={styles.label}>{'Total of Parts:'}</Text>
           <View style={styles.inputView}>
             <TextInput
               style={styles.input}
-              value={num_parts}
+              value={String(num_parts)}
               onChangeText={num_parts => this.setState({num_parts})}
               placeholder={'Parts numbers'}
               placeholderTextColor={'rgba(255,255,255,0.6)'}
@@ -90,24 +92,10 @@ class AddUserSet extends React.Component {
             />
           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>{'Image URL:'}</Text>
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.input}
-                value={set_img_url}
-                onChangeText={set_img_url => this.setState({set_img_url})}
-                placeholder={'Image URL'}
-                placeholderTextColor={'rgba(255,255,255,0.6)'}
-                underlineColorAndroid={'transparent'}
-              />
-            </View>
-          </View>
-
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={this._onSubmit}>
-            <Text style={styles.buttonLabel}>{'Crear personaje'}</Text>
+            <Text style={styles.buttonLabel}>{'Add your Set'}</Text>
             {isFetching ? (
               <ActivityIndicator
                 color={'black'}

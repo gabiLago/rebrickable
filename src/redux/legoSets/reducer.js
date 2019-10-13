@@ -16,6 +16,12 @@ const reducer = (state = initialState, action = {}) => {
         next: action.next || null,
       };
 
+    case types.LEGO_USER_SETS_UPDATE_LIST:
+      return {
+        ...state,
+        userSetsList: action.list,
+      };
+
     case types.LEGO_SET_UPDATE_ITEM:
       return {
         ...state,

@@ -38,12 +38,17 @@ class Sets extends React.Component {
   };
 
   render() {
-    const {setsList, isFetching, search} = this.props;
+    const {setsList, isFetching, params} = this.props;
+    let searchResults;
+    if (params !== undefined && params.search !== undefined) {
+      searchResults = <SearchResults searchString={params.search} />;
+    }
+
     //TODO Limpiar la lista cuando se vuelve a pintar con cambio de parámetros
     return (
       <SafeAreaView style={styles.container}>
         <SearchBox />
-        <SearchResults searchString={search} />
+        {searchResults}
         <FlatList
           data={setsList}
           renderItem={this._renderItem}

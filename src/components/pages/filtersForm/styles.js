@@ -9,37 +9,25 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
   },
-  title: {
-    color: '#FFFFFF',
-    fontSize: 43,
-    fontWeight: '900',
-    textAlign: 'center',
-    paddingBottom: 90,
+  filterTitle: {
+    margin: 20,
+    marginBottom: 5,
+    fontSize: 16,
+    fontWeight: '600',
   },
-  disclaimerTitle: {
-    color: '#FFFFFF',
-    paddingTop: 70,
-    paddingBottom: 10,
-    fontSize: 20,
-    fontWeight: '900',
-    textAlign: 'center',
+  yearsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: 40,
   },
-  textBold: {
-    fontWeight: '400',
-  },
-  disclaimer: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: '200',
-    textAlign: 'center',
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  picker: {
+  pickerContainer: {
+    width: '30%',
     paddingVertical: 5,
   },
-  button: {
-    margin: 30,
+  pickerLabel: {
+    fontWeight: '400',
+    paddingBottom: 5,
   },
 });
 
@@ -51,7 +39,7 @@ export const pickerSelectStyles = StyleSheet.create({
     paddingBottom: 12,
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 4,
+    borderRadius: 12,
     backgroundColor: 'white',
     color: 'black',
   },

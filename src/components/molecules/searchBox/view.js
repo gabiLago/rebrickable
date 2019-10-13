@@ -10,18 +10,37 @@ class SearchBox extends React.Component {
 
   _onSubmit = event => {
     const actualParams = this.props.params;
+
+    let titleString = 'Sets from: ';
+
+    if (actualParams) {
+      const {min_year, max_year} = actualParams;
+      console.log('ActualParams: ', actualParams);
+      if (min_year) {
+        titleString += min_year;
+      }
+      if (max_year) {
+        titleString += '-' + max_year;
+      }
+    }
+
     const params = {
       ...actualParams,
       search: event.nativeEvent.text,
     };
     this.props.updateQueryParams(params);
-    Actions.LegoSets();
+    /*
+    let titleString = 'Sets from: ';
+
+*/
+    Actions.LegoSets({
+      title: titleString,
+    });
   };
 
   render() {
     const {searchString} = this.state;
 
-    console.log('this.state: ', this.state);
     return (
       <View style={styles.container}>
         <TextInput

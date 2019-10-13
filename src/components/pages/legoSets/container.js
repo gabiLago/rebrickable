@@ -7,13 +7,14 @@ const mapStateToProps = state => {
     setsList: state.legoSets.list,
     isFetching: state.legoSets.isFetching,
     next: state.legoSets.next,
+    params: state.legoSets.params,
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    initSetsList: (search, initYear, finalYear) => {
-      dispatch(setsActions.initSetsList(search, initYear, finalYear));
+    initSetsList: () => {
+      dispatch(setsActions.initSetsList());
     },
     updateItem: set => {
       dispatch(setsActions.updateItem(set));

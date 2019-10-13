@@ -9,24 +9,16 @@ class LegoSetPartsCell extends React.Component {
     const partData = this.props.partsListItem.part;
     const partImgUrl = partData.part_img_url;
     const partName = partData.name;
-    
+
     if (partImgUrl !== null) {
       return (
-        <View>
-        <Text>{partName}</Text>
-        <Image
-            source={{url: partImgUrl}}
-            style={{
-              width: '100%',
-              height: 300,
-              resizeMode: 'cover',
-            }}
-          />
-      </View>
-      )
-
+        <View style={styles.container}>
+          <Image source={{url: partImgUrl}} style={styles.images} />
+          <Text style={styles.partName}>{partName}</Text>
+        </View>
+      );
     } else {
-      return <Text>Pieza de Lego</Text>;
+      return <Text>Lego Part</Text>;
     }
   }
 }

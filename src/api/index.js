@@ -11,7 +11,6 @@ export const axiosInstance = axios.create({
 export const getLegoSets = params => {
   const stringifyParams = qs.stringify(params, {skipNulls: true});
   const url = `/sets?${stringifyParams}`;
-  console.log('url: ', url);
   return axiosInstance.get(url);
 };
 

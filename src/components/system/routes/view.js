@@ -5,8 +5,14 @@ import {LegoSet, LegoSets, Welcome, FiltersForm, AddUserSet} from '../../pages';
 const Routes = () => (
   <Router>
     <Stack key="root">
-      <Scene key="Welcome" component={Welcome} hideNavBar initial />
-      <Scene key="LegoSets" component={LegoSets} hideNavBar />
+      <Scene key="Welcome" component={Welcome} tabs hideNavBar initial />
+      <Scene
+        key="LegoSets"
+        title="Sets de 2019"
+        component={LegoSets}
+        backButtonTextStyle={{color: '#FFFFFF'}}
+        backButtonTintColor="#FFFFFF"
+      />
       <Scene key="LegoSet" component={LegoSet} title={'LEGO Set'} />
       <Scene key="FiltersForm" component={FiltersForm} title={'Filters'} />
       <Scene
