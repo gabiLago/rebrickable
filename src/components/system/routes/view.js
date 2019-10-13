@@ -8,7 +8,7 @@ const Routes = () => (
       <Scene key="Welcome" component={Welcome} tabs hideNavBar initial />
       <Scene
         key="LegoSets"
-        title="Sets de 2019 | Technic"
+        title="Sets de 2019 | LEGO Technic"
         component={LegoSets}
         backButtonTextStyle={{color: '#FFFFFF'}}
         backButtonTintColor="#FFFFFF"
