@@ -1,7 +1,8 @@
 import * as types from './types';
 import * as api from '../../api';
 import _ from 'lodash';
-import {Utils} from '../utils';
+import * as utils from '../utils';
+import {API_INITIAL_PARAMS} from '../../config/api';
 
 export const setFetching = value => ({
   type: types.LEGO_SETS_FETCH_STATE,
@@ -35,9 +36,14 @@ export const updateQueryParams = params => {
 export const initSetsList = () => {
   return async (dispatch, getState) => {
     try {
-      const {params, userSetsList} = getState().legoSets;
-      const tokenizedParams = Utils.tokenizedParams(params);
+      const {userSetsList} = getState().legoSets;
+      let {params} = getState().legoSets;
 
+      if (!params) {
+        params = API_INITIAL_PARAMS;
+      }
+
+      const tokenizedParams = utils.tokenizedParams(true, params);
       dispatch(setFetching(true));
 
       const getSetsRes = await api.getLegoSets(tokenizedParams);
@@ -45,10 +51,7 @@ export const initSetsList = () => {
       const nextApiCall = _.get(getSetsRes, 'data.next', null);
 
       if (userSetsList) {
-        console.log('User: ', userSetsList);
-        console.log('Lego: ', legoSetsList);
         legoSetsList = [...userSetsList, ...legoSetsList];
-        console.log('mixed', legoSetsList);
       }
 
       dispatch(updateList(legoSetsList, nextApiCall));

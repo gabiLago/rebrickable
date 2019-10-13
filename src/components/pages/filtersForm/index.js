@@ -1,2 +1,2 @@
-import component from './container';
+import component from './view';
 export default component;

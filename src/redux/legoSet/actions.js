@@ -1,9 +1,7 @@
 import * as types from './types';
 import * as api from '../../api';
-import {API_KEY} from '../../config/api';
 import _ from 'lodash';
-
-const API_ITEMS_LIMIT = 10;
+import * as utils from '../utils/';
 
 export const setFetching = value => ({
   type: types.LEGO_SET_FETCH_STATE,
@@ -20,11 +18,12 @@ export const initialSetPartsList = legoSetNum => {
   return async (dispatch, getState) => {
     try {
       dispatch(setFetching(true));
-      const params = {
-        key: API_KEY,
-        page_size: API_ITEMS_LIMIT,
-      };
-      const getLegoSetPartsRes = await api.getLegoSetParts(legoSetNum, params);
+
+      const getLegoSetPartsRes = await api.getLegoSetParts(
+        legoSetNum,
+        utils.tokenizedParams(true),
+      );
+
       const nextApiCall = _.get(getLegoSetPartsRes, 'data.next', null);
       const legoSetParts = _.get(getLegoSetPartsRes, 'data.results', []);
       dispatch(updatePartsList(legoSetParts, nextApiCall));
