@@ -9,22 +9,8 @@ import {
   Alert,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import _ from 'lodash';
-//import ImagePicker from 'react-native-image-picker';
 
 import styles from './styles';
-
-/*
-
-last_modified_dt: "2018-05-05T20:39:47.277922Z"
-name: "Gears"
-num_parts: 43
-set_img_url: "https://cdn.rebrickable.com/media/sets/001-1.jpg"
-set_num: "001-1"
-set_url: "https://rebrickable.com/sets/001-1/gears/"
-theme_id: 1
-year: 1965
-*/
 
 class AddUserSet extends React.Component {
   state = {
@@ -37,13 +23,13 @@ class AddUserSet extends React.Component {
 
   _onSubmit = () => {
     const {isFetching} = this.props;
-    const {name, num_parts, set_img_url, set_num} = this.state;
+    const {name, num_parts, set_num} = this.state;
     if (isFetching) {
       return;
     }
 
     if (!name || !num_parts) {
-      Alert.alert('Atencion', 'Complete el nombre y la edad');
+      Alert.alert('Atencion', 'Insert a number of parts');
       return;
     }
 
@@ -92,9 +78,7 @@ class AddUserSet extends React.Component {
             />
           </View>
 
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={this._onSubmit}>
+          <TouchableOpacity style={styles.button} onPress={this._onSubmit}>
             <Text style={styles.buttonLabel}>{'Add your Set'}</Text>
             {isFetching ? (
               <ActivityIndicator

@@ -16,20 +16,87 @@ class YearsForm extends React.Component {
       maxYear: undefined,
       maxYearsArray: [],
       maxPickerDisabled: true,
+      theme: undefined,
+      themes: [
+        {
+          label: 'Technic',
+          value: 1,
+        },
+        {
+          label: 'Creator',
+          value: 22,
+        },
+        {
+          label: 'Star Wars',
+          value: 18,
+        },
+        {
+          label: 'City',
+          value: 50,
+        },
+      ],
     };
   }
 
   _onPress = () => {
     const actualParams = this.props.params;
-    const {minYear, maxYear} = this.state;
-    const params = {
+    const {minYear, maxYear, theme} = this.state;
+    let params = {
       ...actualParams,
-      min_year: parseInt(minYear, 10),
-      max_year: parseInt(maxYear, 10),
     };
+    let titleChain = '';
+
+    if (minYear) {
+      params = {
+        ...params,
+        min_year: parseInt(minYear, 10),
+      };
+      titleChain += minYear;
+    }
+
+    if (maxYear) {
+      params = {
+        ...params,
+        max_year: parseInt(maxYear, 10),
+      };
+      titleChain += '-' + maxYear;
+    }
+
+    if (minYear && theme) {
+      titleChain += ' | ';
+    }
+
+    if (theme) {
+      params = {
+        ...params,
+        theme_id: theme,
+      };
+      switch (theme) {
+        case 1:
+          titleChain += 'Tehcnic';
+          break;
+
+        case 22:
+          titleChain += 'Creator';
+          break;
+
+        case 18:
+          titleChain += 'StarWars';
+          break;
+
+        case 50:
+          titleChain += 'City';
+          break;
+
+        default:
+          titleChain += '| All';
+          break;
+      }
+    }
+
     this.props.updateQueryParams(params);
 
-    Actions.LegoSets({title: `Sets from: ${minYear}-${maxYear}`});
+    Actions.LegoSets({title: `${titleChain}`});
   };
 
   _yearsRange = start => {
@@ -40,18 +107,19 @@ class YearsForm extends React.Component {
     }
     return yearsArray;
   };
+
   render() {
     return (
       <View>
         <Text style={styles.filterTitle}>
-          Choose a min and max release year
+          Choose a release years range and theme
         </Text>
         <View style={styles.yearsContainer}>
           <View style={styles.pickerContainer}>
             <Text style={styles.pickerLabel}>Min year:</Text>
             <RNPickerSelect
               placeholder={{
-                label: 'Select the Min Year for the sets to show...',
+                label: 'Select Min Year',
                 value: null,
               }}
               items={this.state.minYearsArray}
@@ -79,7 +147,7 @@ class YearsForm extends React.Component {
             <Text style={styles.pickerLabel}>Max Year:</Text>
             <RNPickerSelect
               placeholder={{
-                label: 'Select the Max Year for the sets to show...',
+                label: 'Select Max Year',
                 value: null,
               }}
               items={this.state.maxYearsArray}
@@ -92,7 +160,7 @@ class YearsForm extends React.Component {
                 this.inputRefs.picker.togglePicker();
               }}
               onDownArrow={() => {
-                this.inputRefs.company.focus();
+                this.inputRefs.pickerTheme.togglePicker();
               }}
               style={{...pickerSelectStyles}}
               value={this.state.maxYear}
@@ -102,12 +170,40 @@ class YearsForm extends React.Component {
               disabled={this.state.finalPickerDisabled}
             />
           </View>
+          <View style={styles.pickerContainer}>
+            <Text style={styles.pickerLabel}>LEGO Theme:</Text>
+            <RNPickerSelect
+              placeholder={{
+                label: 'Select a Theme...',
+                value: null,
+              }}
+              items={this.state.themes}
+              onValueChange={value => {
+                this.setState({
+                  theme: value,
+                });
+              }}
+              onUpArrow={() => {
+                this.inputRefs.picker2.togglePicker();
+              }}
+              onDownArrow={() => {
+                this.inputRefs.company.focus();
+              }}
+              style={{...pickerSelectStyles}}
+              value={this.state.theme}
+              ref={el => {
+                this.inputRefs.pickerTheme = el;
+              }}
+            />
+          </View>
         </View>
-        <Button
-          title={'Apply Filters'}
-          style={styles.button}
-          onPress={this._onPress}
-        />
+        <View>
+          <Button
+            title={'Apply Filters'}
+            style={styles.button}
+            onPress={this._onPress}
+          />
+        </View>
       </View>
     );
   }

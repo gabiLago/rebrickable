@@ -10,7 +10,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterTitle: {
-    margin: 20,
+    marginTop: 20,
+    marginLeft: 10,
     marginBottom: 5,
     fontSize: 16,
     fontWeight: '600',

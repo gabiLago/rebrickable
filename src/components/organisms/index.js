@@ -1,3 +1,3 @@
-import YearsFilter from './yearsFilter';
+import Filters from './filters';
 
-export {YearsFilter};
+export {Filters};
