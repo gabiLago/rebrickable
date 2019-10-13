@@ -44,7 +44,6 @@ class Sets extends React.Component {
       searchResults = <SearchResults searchString={params.search} />;
     }
 
-    //TODO Limpiar la lista cuando se vuelve a pintar con cambio de parámetros
     return (
       <SafeAreaView style={styles.container}>
         <SearchBox />

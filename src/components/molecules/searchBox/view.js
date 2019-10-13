@@ -15,7 +15,6 @@ class SearchBox extends React.Component {
 
     if (actualParams) {
       const {min_year, max_year} = actualParams;
-      console.log('ActualParams: ', actualParams);
       if (min_year) {
         titleString += min_year;
       }

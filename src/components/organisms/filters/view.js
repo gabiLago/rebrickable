@@ -4,6 +4,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import {styles, pickerSelectStyles} from './styles';
 import {Actions} from 'react-native-router-flux';
 
+// TODO Hay que darle una vuelta a todo
+
 class YearsForm extends React.Component {
   constructor(props) {
     super(props);
